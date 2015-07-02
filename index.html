@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title></title>
+<style>
+	* {padding: 0; margin: 0;}
+	#canvas { background: #333;}
+	button { width: 100px; height: 50px; }
+</style>
+</head>
+<body>
+	
+	<div><canvas id="canvas" width="300"></canvas></div>
+	<input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput"/>
+	<button id="cutBtn">裁切</button>
+	<div>裁切结果：<br/>
+		<img src="" alt="" id="crop_result"/>
+	</div>
+	
+</body>
+<script src="js/imgClip.js"></script>
+<script>
+window.onload = function(){
+	var cut = new ImgClip({
+		canvas : 'canvas', // canvas id
+		fileObj : 'cameraInput', // file id
+		// cutSize : { w : 200,h : 200}, // cutSize设置输出图片大小，默认大小随canvas宽高
+		cutBtn : 'cutBtn', // cut btn id
+		resultObj : 'crop_result' // result img id
+	});
+};
+</script>
+</html>
