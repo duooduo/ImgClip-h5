@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-<title>ImgClip-h5</title>
-<style>
-	* {padding: 0; margin: 0;}
-	#canvas { background: #333;}
-	button { width: 100px; height: 50px; }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="format-detection" content="telephone=no" />
+<title></title>
+<link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-	
-	<div><canvas id="canvas" width="300"></canvas></div>
-	<input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput"/>
-	<button id="cutBtn">裁切</button>
-	<div>裁切结果：<br/>
-		<img src="" alt="" id="crop_result"/>
+<p id="log2" style="color: #fff; position: absolute; left: 0; top: 0; width: 100%; line-height: 14px; font-size: 10px; word-break: break-all;"></p>
+<p id="log" style="color: #fff; position: absolute; left: 0; top: 15px; width: 100%; line-height: 14px; font-size: 10px; word-break: break-all;"></p>
+<div class="l_canvas"><canvas id="canvas01"></canvas></div>
+<div class="l_toolBox">
+	<div class="l_left">
+		<div class="file">
+			<input id="file" type="file" capture="camera"/>上传图片
+		</div>
+		<a id="save" href="javascript:;">保存图片</a>
 	</div>
-	
-</body>
+	<div class="l_img"><img id="img" src=""/></div>
+	<div class="l_right">
+		<a id="rotateR" href="javascript:;">→旋转</a>
+		<!--<a id="rotateL" href="javascript:;">←旋转</a>-->
+	</div>
+</div>
+<script src="js/move.js"></script>
 <script src="js/imgClip.js"></script>
 <script>
+/*
+* 需求：
+* 1、默认【1：处理一下最小边长】，【2：使裁切区域没有留白】
+* 2、若默认没有留白， 且宽高均比canvas的宽高大，按照宽高最小比压缩，显示。
+* 3、【放大】放大最大比为canvas*3，最小比为裁剪区大小
+* 4、【旋转】旋转按照坐标系中心画，旋转后重新考虑【1,2】
+* 5、【拖拽回弹】up后，考虑【2】，不满足则回弹（位置）
+* 6、【缩放回弹】缩放大于max或小于min，宽高回弹（宽高）至max或min
+* */
 window.onload = function(){
 	var cut = new ImgClip({
-		canvas : 'canvas', // canvas id
-		fileObj : 'cameraInput', // file id
-		// cutSize : { w : 200,h : 200}, // cutSize设置输出图片大小，默认大小随canvas宽高
-		cutBtn : 'cutBtn', // cut btn id
-		resultObj : 'crop_result' // result img id
+		canvas : 'canvas01', // canvas id
+		fileObj : 'file', // file id
+		cutBtn : 'save', // cut btn id
+		resultObj : 'img', // result img i
+		rotateR : 'rotateR',
+		cutScale : 1, // 1:1、3:4
+		cutW : '160' // '数字'或者'winW'关键字，裁切宽度，随屏幕宽或自己设置
 	});
+
+	/*// resize
+	window.addEventListener('resize', function(e){
+		cut.resizefn(cut, cut.canvas);
+	});*/
+
 };
 </script>
+</body>
 </html>
