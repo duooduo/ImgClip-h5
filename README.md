@@ -3,7 +3,8 @@
 
 
 支持旋转，支持移出截取框自动回滚防止留白，支持双指缩放
-=====
+
+
 
 ### 访问地址：[在线demo](http://duooduo.github.io/ImgClip-h5/)
  
